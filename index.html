@@ -1,121 +1,611 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#080817">
-  <title>RETRO ARCADE | Ultimate Games</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RETRO ARCADE</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#080b18;color:white;
+ font-family:Arial,sans-serif;text-align:center
+}
+header{
+ padding:22px;background:#111936;
+ border-bottom:2px solid #00eaff
+}
+h1{color:#00eaff;letter-spacing:4px}
+button{
+ border:0;border-radius:10px;padding:12px 18px;
+ margin:5px;background:#00d9ff;color:#06101c;
+ font-weight:bold;cursor:pointer
+}
+button:hover{background:#fff}
+.screen{display:none;padding:20px}
+.screen.active{display:block}
+.menu-card{
+ display:inline-block;background:#151e3b;
+ border:1px solid #00d9ff;border-radius:15px;
+ padding:25px;margin:12px;width:260px
+}
+#gameCanvas{
+ width:min(95vw,520px);height:auto;
+ background:#111;display:block;margin:15px auto;
+ border:3px solid #00eaff;border-radius:12px
+}
+.hud{
+ display:flex;justify-content:center;gap:12px;
+ flex-wrap:wrap;margin:10px
+}
+.hud span{
+ background:#172344;padding:10px 15px;border-radius:8px
+}
+.controls{
+ display:flex;justify-content:center;gap:8px;
+ flex-wrap:wrap;max-width:520px;margin:auto
+}
+.gauges{
+ display:flex;justify-content:center;gap:18px;
+ flex-wrap:wrap;margin:15px
+}
+.gauge{
+ width:125px;height:125px;border:5px solid #00d9ff;
+ border-radius:50%;background:#101a33;
+ display:flex;flex-direction:column;
+ justify-content:center;align-items:center
+}
+.gauge strong{font-size:27px;color:#00eaff}
+.gauge small{color:#bbb}
+#steering{
+ width:100px;height:100px;border:9px solid #ddd;
+ border-radius:50%;margin:12px auto;
+ position:relative;touch-action:none;
+ cursor:grab
+}
+#steering:before{
+ content:"";position:absolute;width:65px;height:8px;
+ background:#ddd;left:9px;top:37px
+}
+#steering:after{
+ content:"";position:absolute;width:8px;height:42px;
+ background:#ddd;left:37px;top:37px
+}
+.question{
+ max-width:650px;margin:20px auto;
+ padding:25px;background:#151e3b;
+ border-radius:15px
+}
+.answer{
+ display:block;width:100%;max-width:450px;
+ margin:10px auto;background:#25365e;color:white
+}
+.answer:disabled{opacity:.65;cursor:default}
+#feedback{font-weight:bold;margin:15px}
+</style>
 </head>
+
 <body>
-  <div class="background-glow"></div>
 
-  <header class="topbar">
-    <a class="logo" href="#" onclick="goHome();return false">
-      <span>✦</span> RETRO ARCADE
-    </a>
-    <div class="top-label">ULTIMATE PIXEL GAMING</div>
-  </header>
+<header>
+<h1>RETRO ARCADE</h1>
+<p>RACE • PLAY • CHALLENGE</p>
+</header>
 
-  <main>
-    <section id="home" class="screen active">
-      <div class="hero">
-        <div class="eyebrow">WELCOME TO THE ARCADE</div>
-        <h1>PLAY BEYOND<br><span>LIMITS.</span></h1>
-        <p>Two games. One arcade. Endless fun.</p>
-      </div>
+<!-- HOME -->
+<section id="home" class="screen active">
+<h2>WELCOME TO RETRO ARCADE</h2>
+<p>Choose your game!</p>
 
-      <div class="game-grid">
-        <article class="game-card racing-card">
-          <div class="card-icon">🏎️</div>
-          <div class="card-tag">01 / ACTION</div>
-          <h2>RETRO RACING</h2>
-          <p>Race through neon roads, dodge traffic, collect coins and activate nitro!</p>
-          <button class="primary-btn" onclick="openGame('race')">PLAY RACING <span>→</span></button>
-        </article>
+<div class="menu-card">
+<h2>🏎️ RETRO RACING</h2>
+<p>Race through traffic, collect coins and use nitro!</p>
+<button onclick="showScreen('racing');startRace()">PLAY RACING</button>
+</div>
 
-        <article class="game-card quiz-card">
-          <div class="card-icon">🧠</div>
-          <div class="card-tag">02 / BRAIN</div>
-          <h2>QUIZ MASTER</h2>
-          <p>Challenge yourself with exciting questions and beat your high score!</p>
-          <button class="primary-btn" onclick="openGame('quiz')">PLAY QUIZ <span>→</span></button>
-        </article>
-      </div>
-      <footer>© RETRO ARCADE • INSERT COIN TO PLAY</footer>
-    </section>
+<div class="menu-card">
+<h2>🧠 QUIZ MASTER</h2>
+<p>Test your general knowledge and technology skills.</p>
+<button onclick="showScreen('quiz');startQuiz()">PLAY QUIZ</button>
+</div>
+</section>
 
-    <section id="race" class="screen">
-      <div class="game-heading">
-        <button class="back-btn" onclick="goHome()">← HOME</button>
-        <div><div class="eyebrow">ARCADE MODE 01</div><h2>NEON RACER</h2></div>
-        <div class="game-status">● READY</div>
-      </div>
+<!-- RACING -->
+<section id="racing" class="screen">
+<h2>🏎️ RETRO RACING</h2>
 
-      <div class="race-layout">
-        <div class="canvas-wrap">
-          <canvas id="gameCanvas" width="480" height="700"></canvas>
-          <div id="raceOverlay" class="game-overlay">
-            <div class="overlay-box">
-              <div class="big-icon">🏁</div>
-              <h2>NEON RACER</h2>
-              <p>Ready to hit the road?</p>
-              <button class="primary-btn" onclick="startRace()">START RACE</button>
-            </div>
-          </div>
-        </div>
+<div class="hud">
+<span>Score: <b id="score">0</b></span>
+<span>Coins: <b id="coins">0</b></span>
+<span>Nitro: <b id="nitro">100</b>%</span>
+</div>
 
-        <aside class="race-sidebar">
-          <div class="stat-box"><small>SCORE</small><strong id="score">000000</strong></div>
-          <div class="stat-box"><small>COINS</small><strong id="coins">0</strong></div>
-          <div class="stat-box"><small>SPEED</small><strong id="speed">0 <small>KM/H</small></strong></div>
-          <div class="stat-box"><small>BEST SCORE</small><strong id="best">0</strong></div>
-          <div class="nitro-box">
-            <small>NITRO BOOST</small>
-            <div class="nitro-track"><div id="nitroFill"></div></div>
-            <button id="nitroButton" class="nitro-btn" onclick="useNitro()">⚡ NITRO</button>
-          </div>
-          <button class="secondary-btn" onclick="pauseRace()">Ⅱ PAUSE</button>
-          <button class="secondary-btn" onclick="startRace()">↻ RESTART</button>
-        </aside>
-      </div>
+<canvas id="gameCanvas" width="520" height="700"></canvas>
 
-      <div class="mobile-controls">
-        <button onpointerdown="setSteer(-1)" onpointerup="setSteer(0)" onpointerleave="setSteer(0)" onpointercancel="setSteer(0)">◀</button>
-        <button onpointerdown="setSteer(1)" onpointerup="setSteer(0)" onpointerleave="setSteer(0)" onpointercancel="setSteer(0)">▶</button>
-        <button onclick="useNitro()">⚡</button>
-      </div>
-      <p class="controls-hint">KEYBOARD: ← → OR A / D • SPACE: NITRO • P: PAUSE</p>
-    </section>
+<div class="gauges">
+<div class="gauge">
+<strong id="speed">0</strong>
+<small>KM/H</small>
+</div>
+<div class="gauge">
+<strong id="rpm">0</strong>
+<small>RPM</small>
+</div>
+</div>
 
-    <section id="quiz" class="screen">
-      <div class="game-heading">
-        <button class="back-btn" onclick="goHome()">← HOME</button>
-        <div><div class="eyebrow">ARCADE MODE 02</div><h2>QUIZ MASTER</h2></div>
-        <div class="game-status">● CHALLENGE</div>
-      </div>
+<p>Drag the steering wheel or use the controls.</p>
+<div id="steering" aria-label="Drag steering wheel"></div>
 
-      <div class="quiz-panel">
-        <div class="quiz-top">
-          <span id="quizLevel">LEVEL 01</span>
-          <span id="quizTimer">TIME: 15</span>
-        </div>
-        <div class="progress-track"><div id="quizProgress"></div></div>
-        <div id="quizContent">
-          <div class="quiz-emoji">🧠</div>
-          <h2>ARE YOU READY?</h2>
-          <p>Answer questions and collect points.</p>
-          <button class="primary-btn" onclick="startQuiz()">START QUIZ</button>
-        </div>
-        <div id="quizAnswers" class="answer-grid"></div>
-        <div class="quiz-bottom">
-          <span id="quizScore">SCORE: 0</span>
-          <span id="quizCount">QUESTION: 0 / 10</span>
-        </div>
-      </div>
-    </section>
-  </main>
+<div class="controls">
+<button id="left">⬅ LEFT</button>
+<button id="right">RIGHT ➡</button>
+<button id="brake">BRAKE</button>
+<button onclick="useNitro()">⚡ NITRO</button>
+<button onclick="toggleSound()" id="soundButton">🔊 SOUND ON</button>
+</div>
 
-  <script src="script.js"></script>
+<br>
+<button onclick="pauseRace()" id="pauseButton">⏸ PAUSE</button>
+<button onclick="startRace()">↻ RESTART</button>
+<button onclick="goHome()">HOME</button>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="screen">
+<h2>🧠 QUIZ MASTER</h2>
+<div class="hud">
+<span>Question: <b id="qNumber">1</b>/9</span>
+<span>Score: <b id="qScore">0</b></span>
+</div>
+<div class="question">
+<h3 id="questionText">Question</h3>
+<div id="answers"></div>
+<p id="feedback"></p>
+<button id="nextButton" onclick="nextQuestion()" style="display:none">NEXT QUESTION ➜</button>
+</div>
+<button onclick="goHome()">HOME</button>
+</section>
+
+<script>
+// ===============================
+// SCREEN NAVIGATION
+// ===============================
+function showScreen(id){
+ document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+}
+function goHome(){
+ stopRace();
+ showScreen("home");
+}
+
+// ===============================
+// RACING GAME
+// ===============================
+const canvas=document.getElementById("gameCanvas");
+const ctx=canvas.getContext("2d");
+
+let playerX=260;
+let roadOffset=0;
+let enemies=[];
+let pickups=[];
+let score=0;
+let coins=0;
+let nitro=100;
+let speed=0;
+let steering=0;
+let running=false;
+let paused=false;
+let lastTime=0;
+let spawn=0;
+let coinSpawn=0;
+let animation=0;
+let nitroOn=false;
+let braking=false;
+let soundOn=true;
+let audio=null;
+
+function startAudio(){
+ if(!audio){
+  audio=new (window.AudioContext||window.webkitAudioContext)();
+ }
+ if(audio.state==="suspended")audio.resume();
+}
+function beep(freq,duration=0.12,type="sine",volume=0.05){
+ if(!soundOn)return;
+ startAudio();
+ const osc=audio.createOscillator();
+ const gain=audio.createGain();
+ osc.type=type;
+ osc.frequency.value=freq;
+ gain.gain.setValueAtTime(volume,audio.currentTime);
+ gain.gain.exponentialRampToValueAtTime(0.001,audio.currentTime+duration);
+ osc.connect(gain);gain.connect(audio.destination);
+ osc.start();osc.stop(audio.currentTime+duration);
+}
+function toggleSound(){
+ soundOn=!soundOn;
+ document.getElementById("soundButton").textContent=soundOn?"🔊 SOUND ON":"🔇 SOUND OFF";
+ if(soundOn)beep(600);
+}
+
+function drawRoad(){
+ const w=canvas.width,h=canvas.height;
+ ctx.fillStyle="#17632e";
+ ctx.fillRect(0,0,w,h);
+
+ // Road
+ ctx.fillStyle="#333944";
+ ctx.fillRect(65,0,390,h);
+
+ // Road edges
+ ctx.fillStyle="#eeeeee";
+ ctx.fillRect(65,0,8,h);
+ ctx.fillRect(447,0,8,h);
+
+ // Red and white side markings
+ for(let y=-50;y<h;y+=70){
+  let yy=(y+roadOffset)%70;
+  ctx.fillStyle="#ff3434";
+  ctx.fillRect(53,yy,12,35);
+  ctx.fillRect(455,yy,12,35);
+  ctx.fillStyle="white";
+  ctx.fillRect(53,yy+35,12,35);
+  ctx.fillRect(455,yy+35,12,35);
+ }
+
+ // Lane markings
+ ctx.strokeStyle="#fff";
+ ctx.lineWidth=5;
+ ctx.setLineDash([40,35]);
+ ctx.lineDashOffset=-roadOffset;
+ ctx.beginPath();
+ ctx.moveTo(195,0);ctx.lineTo(195,h);
+ ctx.moveTo(325,0);ctx.lineTo(325,h);
+ ctx.stroke();
+ ctx.setLineDash([]);
+
+ // Road glow
+ ctx.fillStyle="rgba(0,220,255,0.07)";
+ ctx.fillRect(73,0,374,h);
+}
+
+function drawCar(x,y,color,player=false){
+ ctx.save();
+ ctx.translate(x,y);
+
+ // Shadow
+ ctx.fillStyle="rgba(0,0,0,.5)";
+ ctx.fillRect(-25,8,58,78);
+
+ // Wheels
+ ctx.fillStyle="#080808";
+ ctx.fillRect(-29,15,9,23);
+ ctx.fillRect(22,15,9,23);
+ ctx.fillRect(-29,55,9,23);
+ ctx.fillRect(22,55,9,23);
+
+ // Body
+ let gradient=ctx.createLinearGradient(-25,0,25,0);
+ gradient.addColorStop(0,"#555");
+ gradient.addColorStop(.35,color);
+ gradient.addColorStop(1,"#222");
+ ctx.fillStyle=gradient;
+ ctx.beginPath();
+ ctx.moveTo(-22,70);ctx.lineTo(-25,20);
+ ctx.lineTo(-16,0);ctx.lineTo(16,0);
+ ctx.lineTo(25,20);ctx.lineTo(22,70);
+ ctx.closePath();ctx.fill();
+
+ // Windows
+ ctx.fillStyle="#9cecff";
+ ctx.beginPath();
+ ctx.moveTo(-15,24);ctx.lineTo(-11,8);
+ ctx.lineTo(11,8);ctx.lineTo(15,24);
+ ctx.closePath();ctx.fill();
+
+ ctx.fillStyle="#162c45";
+ ctx.fillRect(-15,29,30,17);
+
+ // Lights
+ ctx.fillStyle=player?"#00f5ff":"#ff3333";
+ ctx.fillRect(-19,65,9,5);
+ ctx.fillRect(10,65,9,5);
+ ctx.restore();
+}
+
+function drawCoin(x,y){
+ ctx.beginPath();
+ ctx.arc(x,y,11,0,Math.PI*2);
+ ctx.fillStyle="#ffd700";ctx.fill();
+ ctx.strokeStyle="#fff2a0";ctx.lineWidth=3;ctx.stroke();
+ ctx.fillStyle="#9b6800";ctx.font="bold 14px Arial";
+ ctx.textAlign="center";ctx.fillText("$",x,y+5);
+}
+
+function drawNitroEffect(){
+ if(!nitroOn)return;
+ for(let i=0;i<12;i++){
+  ctx.fillStyle=i%2?"#00eaff":"#ffb000";
+  ctx.fillRect(playerX-12+Math.random()*25,570+Math.random()*65,4,15+Math.random()*25);
+ }
+}
+
+function drawGame(){
+ drawRoad();
+ enemies.forEach(e=>drawCar(e.x,e.y,e.color));
+ pickups.forEach(c=>drawCoin(c.x,c.y));
+ drawNitroEffect();
+ drawCar(playerX,570,"#00dfff",true);
+
+ if(!running){
+  ctx.fillStyle="rgba(0,0,0,.6)";
+  ctx.fillRect(65,260,390,120);
+  ctx.fillStyle="white";ctx.font="bold 28px Arial";
+  ctx.textAlign="center";ctx.fillText(paused?"PAUSED":"PRESS PLAY",260,325);
+ }
+}
+
+function updateHud(){
+ document.getElementById("score").textContent=score;
+ document.getElementById("coins").textContent=coins;
+ document.getElementById("nitro").textContent=Math.round(nitro);
+ document.getElementById("speed").textContent=Math.round(speed);
+ document.getElementById("rpm").textContent=Math.round(speed*35);
+}
+
+function endRace(){
+ running=false;
+ nitroOn=false;
+ beep(130,.35,"sawtooth");
+ alert("CRASH! Your score: "+score+" | Coins: "+coins);
+}
+
+function updateRace(dt){
+ if(!running||paused)return;
+
+ const target=braking?65:(nitroOn&&nitro>0?285:190);
+ speed+=(target-speed)*Math.min(1,dt*2);
+ roadOffset+=speed*dt*0.55;
+ score+=Math.floor(speed*dt/10);
+
+ playerX+=steering*260*dt;
+ playerX=Math.max(105,Math.min(415,playerX));
+
+ spawn+=dt;
+ coinSpawn+=dt;
+
+ if(spawn>Math.max(.45,1.25-speed/500)){
+  spawn=0;
+  let lanes=[130,260,390];
+  let x=lanes[Math.floor(Math.random()*3)];
+  enemies.push({x,y:-100,color:["#ff3030","#ffcc00","#b45cff","#ffffff"][Math.floor(Math.random()*4)]});
+ }
+ if(coinSpawn>1.2){
+  coinSpawn=0;
+  pickups.push({x:[130,260,390][Math.floor(Math.random()*3)],y:-20});
+ }
+
+ enemies.forEach(e=>e.y+=speed*dt*0.65);
+ pickups.forEach(c=>c.y+=speed*dt*0.65);
+
+ enemies=enemies.filter(e=>e.y<760);
+ pickups=pickups.filter(c=>c.y<760);
+
+ for(const e of enemies){
+  if(Math.abs(e.x-playerX)<43&&Math.abs(e.y-570)<65){
+   endRace();return;
+  }
+ }
+ pickups=pickups.filter(c=>{
+  if(Math.abs(c.x-playerX)<35&&Math.abs(c.y-570)<45){
+   coins++;score+=100;beep(900,.1);return false;
+  }
+  return true;
+ });
+
+ if(nitroOn){
+  nitro=Math.max(0,nitro-25*dt);
+  if(nitro===0)nitroOn=false;
+ }else{
+  nitro=Math.min(100,nitro+5*dt);
+ }
+ updateHud();
+}
+
+function loop(time){
+ if(!running)return;
+ let dt=Math.min((time-lastTime)/1000||0,0.04);
+ lastTime=time;
+ updateRace(dt);
+ drawGame();
+ if(running)animation=requestAnimationFrame(loop);
+}
+
+function startRace(){
+ startAudio();
+ cancelAnimationFrame(animation);
+ playerX=260;roadOffset=0;
+ enemies=[];pickups=[];
+ score=0;coins=0;nitro=100;speed=0;
+ steering=0;nitroOn=false;braking=false;
+ paused=false;running=true;spawn=0;coinSpawn=0;
+ lastTime=0;
+ updateHud();
+ drawGame();
+ animation=requestAnimationFrame(loop);
+}
+function stopRace(){
+ running=false;cancelAnimationFrame(animation);
+}
+function pauseRace(){
+ if(!running)return;
+ paused=!paused;
+ document.getElementById("pauseButton").textContent=paused?"▶ RESUME":"⏸ PAUSE";
+ if(paused){drawGame();}
+ else{lastTime=0;animation=requestAnimationFrame(loop);}
+}
+function useNitro(){
+ startAudio();
+ if(nitro>5&&running&&!paused){
+  nitroOn=true;beep(500,.3,"sawtooth");
+ }
+}
+
+// Hold controls
+function holdButton(id,value){
+ const b=document.getElementById(id);
+ b.addEventListener("pointerdown",e=>{
+  e.preventDefault();startAudio();steering=value;
+ });
+ ["pointerup","pointerleave","pointercancel"].forEach(event=>{
+  b.addEventListener(event,()=>{if(steering===value)steering=0});
+ });
+}
+holdButton("left",-1);
+holdButton("right",1);
+
+const brakeButton=document.getElementById("brake");
+brakeButton.addEventListener("pointerdown",()=>{braking=true;startAudio()});
+["pointerup","pointerleave","pointercancel"].forEach(event=>{
+ brakeButton.addEventListener(event,()=>braking=false);
+});
+
+// Steering wheel drag
+const wheel=document.getElementById("steering");
+let wheelStart=null;
+wheel.addEventListener("pointerdown",e=>{
+ wheel.setPointerCapture(e.pointerId);
+ wheelStart=e.clientX;
+});
+wheel.addEventListener("pointermove",e=>{
+ if(wheelStart!==null){
+  steering=Math.max(-1,Math.min(1,(e.clientX-wheelStart)/35));
+  wheel.style.transform="rotate("+steering*45+"deg)";
+ }
+});
+function releaseWheel(){
+ wheelStart=null;steering=0;wheel.style.transform="rotate(0deg)";
+}
+wheel.addEventListener("pointerup",releaseWheel);
+wheel.addEventListener("pointercancel",releaseWheel);
+
+// Keyboard controls
+document.addEventListener("keydown",e=>{
+ if(e.key==="ArrowLeft"||e.key.toLowerCase()==="a")steering=-1;
+ if(e.key==="ArrowRight"||e.key.toLowerCase()==="d")steering=1;
+ if(e.key==="ArrowDown"||e.key.toLowerCase()==="s")braking=true;
+ if(e.code==="Space"){e.preventDefault();useNitro()}
+});
+document.addEventListener("keyup",e=>{
+ if(["ArrowLeft","ArrowRight","a","d","A","D"].includes(e.key))steering=0;
+ if(["ArrowDown","s","S"].includes(e.key))braking=false;
+});
+
+drawGame();
+
+// ===============================
+// QUIZ MASTER
+// ===============================
+const questions=[
+ {
+  q:"Which computer component executes arithmetic, logical and control instructions?",
+  a:["Monitor","CPU","Keyboard","Mouse"],c:1
+ },
+ {
+  q:"Which country has the most time zones, spanning 12?",
+  a:["Russia","United States","France","China"],c:2
+ },
+ {
+  q:"Which major European river flows through or along the borders of 10 countries?",
+  a:["Danube","Rhine","Seine","Thames"],c:0
+ },
+ {
+  q:"Which country has over 17,000 islands and many active volcanoes?",
+  a:["Japan","Indonesia","Philippines","New Zealand"],c:1
+ },
+ {
+  q:"Which desert covers most of North Africa?",
+  a:["Gobi Desert","Kalahari Desert","Sahara Desert","Arabian Desert"],c:2
+ },
+ {
+  q:"What is the capital city of Australia?",
+  a:["Sydney","Melbourne","Canberra","Perth"],c:2
+ },
+ {
+  q:"What is the main function of ABS in a vehicle?",
+  a:["Increase engine power","Prevent wheels from locking during hard braking","Change gears automatically","Cool the engine"],c:1
+ },
+ {
+  q:"Which component converts piston movement into rotary motion?",
+  a:["Camshaft","Crankshaft","Radiator","Clutch"],c:1
+ },
+ {
+  q:"Which belt-driven compressor is used for forced induction in an engine?",
+  a:["Turbocharger","Supercharger","Alternator","Radiator"],c:1
+ }
+];
+
+let qIndex=0;
+let qScore=0;
+let answered=false;
+
+function startQuiz(){
+ qIndex=0;qScore=0;
+ showQuestion();
+}
+function showQuestion(){
+ answered=false;
+ const q=questions[qIndex];
+ document.getElementById("qNumber").textContent=qIndex+1;
+ document.getElementById("qScore").textContent=qScore;
+ document.getElementById("questionText").textContent=q.q;
+ document.getElementById("feedback").textContent="";
+ document.getElementById("nextButton").style.display="none";
+
+ const box=document.getElementById("answers");
+ box.innerHTML="";
+ q.a.forEach((answer,i)=>{
+  const b=document.createElement("button");
+  b.className="answer";
+  b.textContent=String.fromCharCode(65+i)+". "+answer;
+  b.onclick=()=>checkAnswer(i,b);
+  box.appendChild(b);
+ });
+}
+function checkAnswer(choice,button){
+ if(answered)return;
+ answered=true;
+ const q=questions[qIndex];
+ const buttons=document.querySelectorAll(".answer");
+ buttons.forEach(b=>b.disabled=true);
+
+ if(choice===q.c){
+  qScore++;
+  document.getElementById("feedback").textContent="✅ Correct answer!";
+  button.style.background="#168c50";
+  beep(850);
+ }else{
+  document.getElementById("feedback").textContent="❌ Correct answer: "+q.a[q.c];
+  button.style.background="#a52b3b";
+  buttons[q.c].style.background="#168c50";
+ }
+ document.getElementById("qScore").textContent=qScore;
+ document.getElementById("nextButton").style.display="inline-block";
+}
+function nextQuestion(){
+ qIndex++;
+ if(qIndex<questions.length){
+  showQuestion();
+ }else{
+  document.getElementById("questionText").textContent="QUIZ COMPLETED!";
+  document.getElementById("answers").innerHTML="";
+  document.getElementById("feedback").textContent=
+   "Your final score: "+qScore+" / "+questions.length;
+  document.getElementById("nextButton").style.display="none";
+  document.getElementById("qNumber").textContent=questions.length;
+ }
+}
+</script>
 </body>
 </html>
