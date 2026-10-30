@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080817">
+  <title>RETRO ARCADE | Ultimate Games</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="background-glow"></div>
+
+  <header class="topbar">
+    <a class="logo" href="#" onclick="goHome();return false">
+      <span>✦</span> RETRO ARCADE
+    </a>
+    <div class="top-label">ULTIMATE PIXEL GAMING</div>
+  </header>
+
+  <main>
+    <section id="home" class="screen active">
+      <div class="hero">
+        <div class="eyebrow">WELCOME TO THE ARCADE</div>
+        <h1>PLAY BEYOND<br><span>LIMITS.</span></h1>
+        <p>Two games. One arcade. Endless fun.</p>
+      </div>
+
+      <div class="game-grid">
+        <article class="game-card racing-card">
+          <div class="card-icon">🏎️</div>
+          <div class="card-tag">01 / ACTION</div>
+          <h2>RETRO RACING</h2>
+          <p>Race through neon roads, dodge traffic, collect coins and activate nitro!</p>
+          <button class="primary-btn" onclick="openGame('race')">PLAY RACING <span>→</span></button>
+        </article>
+
+        <article class="game-card quiz-card">
+          <div class="card-icon">🧠</div>
+          <div class="card-tag">02 / BRAIN</div>
+          <h2>QUIZ MASTER</h2>
+          <p>Challenge yourself with exciting questions and beat your high score!</p>
+          <button class="primary-btn" onclick="openGame('quiz')">PLAY QUIZ <span>→</span></button>
+        </article>
+      </div>
+      <footer>© RETRO ARCADE • INSERT COIN TO PLAY</footer>
+    </section>
+
+    <section id="race" class="screen">
+      <div class="game-heading">
+        <button class="back-btn" onclick="goHome()">← HOME</button>
+        <div><div class="eyebrow">ARCADE MODE 01</div><h2>NEON RACER</h2></div>
+        <div class="game-status">● READY</div>
+      </div>
+
+      <div class="race-layout">
+        <div class="canvas-wrap">
+          <canvas id="gameCanvas" width="480" height="700"></canvas>
+          <div id="raceOverlay" class="game-overlay">
+            <div class="overlay-box">
+              <div class="big-icon">🏁</div>
+              <h2>NEON RACER</h2>
+              <p>Ready to hit the road?</p>
+              <button class="primary-btn" onclick="startRace()">START RACE</button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="race-sidebar">
+          <div class="stat-box"><small>SCORE</small><strong id="score">000000</strong></div>
+          <div class="stat-box"><small>COINS</small><strong id="coins">0</strong></div>
+          <div class="stat-box"><small>SPEED</small><strong id="speed">0 <small>KM/H</small></strong></div>
+          <div class="stat-box"><small>BEST SCORE</small><strong id="best">0</strong></div>
+          <div class="nitro-box">
+            <small>NITRO BOOST</small>
+            <div class="nitro-track"><div id="nitroFill"></div></div>
+            <button id="nitroButton" class="nitro-btn" onclick="useNitro()">⚡ NITRO</button>
+          </div>
+          <button class="secondary-btn" onclick="pauseRace()">Ⅱ PAUSE</button>
+          <button class="secondary-btn" onclick="startRace()">↻ RESTART</button>
+        </aside>
+      </div>
+
+      <div class="mobile-controls">
+        <button onpointerdown="setSteer(-1)" onpointerup="setSteer(0)" onpointerleave="setSteer(0)" onpointercancel="setSteer(0)">◀</button>
+        <button onpointerdown="setSteer(1)" onpointerup="setSteer(0)" onpointerleave="setSteer(0)" onpointercancel="setSteer(0)">▶</button>
+        <button onclick="useNitro()">⚡</button>
+      </div>
+      <p class="controls-hint">KEYBOARD: ← → OR A / D • SPACE: NITRO • P: PAUSE</p>
+    </section>
+
+    <section id="quiz" class="screen">
+      <div class="game-heading">
+        <button class="back-btn" onclick="goHome()">← HOME</button>
+        <div><div class="eyebrow">ARCADE MODE 02</div><h2>QUIZ MASTER</h2></div>
+        <div class="game-status">● CHALLENGE</div>
+      </div>
+
+      <div class="quiz-panel">
+        <div class="quiz-top">
+          <span id="quizLevel">LEVEL 01</span>
+          <span id="quizTimer">TIME: 15</span>
+        </div>
+        <div class="progress-track"><div id="quizProgress"></div></div>
+        <div id="quizContent">
+          <div class="quiz-emoji">🧠</div>
+          <h2>ARE YOU READY?</h2>
+          <p>Answer questions and collect points.</p>
+          <button class="primary-btn" onclick="startQuiz()">START QUIZ</button>
+        </div>
+        <div id="quizAnswers" class="answer-grid"></div>
+        <div class="quiz-bottom">
+          <span id="quizScore">SCORE: 0</span>
+          <span id="quizCount">QUESTION: 0 / 10</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
