@@ -8,542 +8,588 @@
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;background:#080b18;color:white;
- font-family:Arial,sans-serif;text-align:center
+  margin:0;
+  background:#080b18;
+  color:white;
+  font-family:Arial,sans-serif;
+  text-align:center;
 }
 header{
- padding:22px;background:#111936;
- border-bottom:2px solid #00eaff
+  padding:22px 10px;
+  background:linear-gradient(90deg,#101b43,#30105c,#101b43);
+  border-bottom:2px solid #00eaff;
 }
-h1{color:#00eaff;letter-spacing:4px}
-button{
- border:0;border-radius:10px;padding:12px 18px;
- margin:5px;background:#00d9ff;color:#06101c;
- font-weight:bold;cursor:pointer
+header h1{
+  margin:0;
+  color:#00eaff;
+  letter-spacing:5px;
+  text-shadow:0 0 15px #00eaff;
 }
-button:hover{background:#fff}
-.screen{display:none;padding:20px}
-.screen.active{display:block}
-.menu-card{
- display:inline-block;background:#151e3b;
- border:1px solid #00d9ff;border-radius:15px;
- padding:25px;margin:12px;width:260px
+header p{color:#bbb;margin-bottom:0}
+nav{padding:15px}
+nav button{
+  padding:12px 22px;
+  margin:5px;
+  border:1px solid #00eaff;
+  border-radius:8px;
+  background:#111b36;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
 }
-#gameCanvas{
- width:min(95vw,520px);height:auto;
- background:#111;display:block;margin:15px auto;
- border:3px solid #00eaff;border-radius:12px
+nav button:hover{background:#00a8c7}
+.page{display:none;padding:10px}
+.page.active{display:block}
+h2{color:#00eaff;text-shadow:0 0 8px #00eaff}
+.game-wrap{
+  width:min(95vw,520px);
+  margin:auto;
+  padding:10px;
+  background:#11182e;
+  border:1px solid #00eaff;
+  border-radius:14px;
+  box-shadow:0 0 20px #003b60;
 }
-.hud{
- display:flex;justify-content:center;gap:12px;
- flex-wrap:wrap;margin:10px
+#game{
+  display:block;
+  width:100%;
+  height:auto;
+  background:#222;
+  border-radius:8px;
 }
-.hud span{
- background:#172344;padding:10px 15px;border-radius:8px
+.dashboard{
+  display:flex;
+  justify-content:space-around;
+  flex-wrap:wrap;
+  gap:10px;
+  padding:12px 3px;
+}
+.meter{
+  background:#080e20;
+  border:2px solid #00eaff;
+  border-radius:50%;
+  width:95px;
+  height:95px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  box-shadow:0 0 12px #007b9c;
+}
+.meter strong{font-size:23px;color:#00ffcf}
+.meter small{color:#aaa}
+.stats{
+  display:flex;
+  justify-content:space-around;
+  gap:8px;
+  flex-wrap:wrap;
+  padding:10px;
+  color:#ffe66d;
+  font-weight:bold;
 }
 .controls{
- display:flex;justify-content:center;gap:8px;
- flex-wrap:wrap;max-width:520px;margin:auto
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  padding:10px;
 }
-.gauges{
- display:flex;justify-content:center;gap:18px;
- flex-wrap:wrap;margin:15px
+.controls button,.main-btn{
+  padding:13px 20px;
+  border:0;
+  border-radius:9px;
+  background:linear-gradient(135deg,#00bcd4,#315cff);
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 4px 12px #001d4a;
+  touch-action:none;
 }
-.gauge{
- width:125px;height:125px;border:5px solid #00d9ff;
- border-radius:50%;background:#101a33;
- display:flex;flex-direction:column;
- justify-content:center;align-items:center
+.controls button:active,.main-btn:active{transform:scale(.95)}
+.controls .nitro{background:linear-gradient(135deg,#ff8a00,#ff1744)}
+.controls .brake{background:linear-gradient(135deg,#555,#222)}
+#message{color:#ffe66d;min-height:25px}
+.instructions{color:#aaa;font-size:13px;line-height:1.6}
+.quiz-box{
+  max-width:600px;
+  margin:20px auto;
+  padding:22px;
+  background:#11182e;
+  border:1px solid #00eaff;
+  border-radius:14px;
 }
-.gauge strong{font-size:27px;color:#00eaff}
-.gauge small{color:#bbb}
-#steering{
- width:100px;height:100px;border:9px solid #ddd;
- border-radius:50%;margin:12px auto;
- position:relative;touch-action:none;
- cursor:grab
-}
-#steering:before{
- content:"";position:absolute;width:65px;height:8px;
- background:#ddd;left:9px;top:37px
-}
-#steering:after{
- content:"";position:absolute;width:8px;height:42px;
- background:#ddd;left:37px;top:37px
-}
-.question{
- max-width:650px;margin:20px auto;
- padding:25px;background:#151e3b;
- border-radius:15px
-}
+#question{font-size:20px;line-height:1.5}
 .answer{
- display:block;width:100%;max-width:450px;
- margin:10px auto;background:#25365e;color:white
+  display:block;
+  width:100%;
+  margin:10px 0;
+  padding:13px;
+  border:1px solid #385477;
+  border-radius:8px;
+  background:#172442;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
 }
-.answer:disabled{opacity:.65;cursor:default}
-#feedback{font-weight:bold;margin:15px}
+.answer:hover{background:#244b70}
+.answer.correct{background:#087a43}
+.answer.wrong{background:#9c2638}
+#quizMessage{min-height:24px;color:#ffe66d}
+footer{padding:25px;color:#777}
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>RETRO ARCADE</h1>
-<p>RACE • PLAY • CHALLENGE</p>
+  <h1>RETRO ARCADE</h1>
+  <p>RACE • PLAY • CHALLENGE</p>
 </header>
 
-<!-- HOME -->
-<section id="home" class="screen active">
-<h2>WELCOME TO RETRO ARCADE</h2>
-<p>Choose your game!</p>
+<nav>
+  <button onclick="showPage('racing')">🏎️ RETRO RACING</button>
+  <button onclick="showPage('quiz')">🧠 QUIZ MASTER</button>
+</nav>
 
-<div class="menu-card">
-<h2>🏎️ RETRO RACING</h2>
-<p>Race through traffic, collect coins and use nitro!</p>
-<button onclick="showScreen('racing');startRace()">PLAY RACING</button>
-</div>
+<section id="racing" class="page active">
+  <h2>🏎️ RETRO RACING</h2>
 
-<div class="menu-card">
-<h2>🧠 QUIZ MASTER</h2>
-<p>Test your general knowledge and technology skills.</p>
-<button onclick="showScreen('quiz');startQuiz()">PLAY QUIZ</button>
-</div>
+  <div class="game-wrap">
+    <canvas id="game" width="520" height="700"></canvas>
+
+    <div class="dashboard">
+      <div class="meter">
+        <strong id="speed">0</strong>
+        <small>KM/H</small>
+      </div>
+      <div class="meter">
+        <strong id="rpm">0</strong>
+        <small>RPM</small>
+      </div>
+    </div>
+
+    <div class="stats">
+      <span>🪙 Coins: <b id="coins">0</b></span>
+      <span>🏆 Score: <b id="score">0</b></span>
+      <span>⚡ Nitro: <b id="nitroLevel">100</b>%</span>
+    </div>
+
+    <div class="controls">
+      <button id="left">⬅ LEFT</button>
+      <button id="right">RIGHT ➡</button>
+      <button id="brake" class="brake">BRAKE</button>
+      <button id="boost" class="nitro">⚡ NITRO</button>
+    </div>
+
+    <div class="controls">
+      <button class="main-btn" id="start">▶ START GAME</button>
+      <button class="main-btn" id="sound">🔊 SOUND ON</button>
+    </div>
+    <p id="message">Press START GAME to begin!</p>
+  </div>
+
+  <p class="instructions">
+    Computer: use ← → arrow keys to steer, ↓ to brake and SPACE for nitro.
+    <br>Collect coins and avoid traffic!
+  </p>
 </section>
 
-<!-- RACING -->
-<section id="racing" class="screen">
-<h2>🏎️ RETRO RACING</h2>
-
-<div class="hud">
-<span>Score: <b id="score">0</b></span>
-<span>Coins: <b id="coins">0</b></span>
-<span>Nitro: <b id="nitro">100</b>%</span>
-</div>
-
-<canvas id="gameCanvas" width="520" height="700"></canvas>
-
-<div class="gauges">
-<div class="gauge">
-<strong id="speed">0</strong>
-<small>KM/H</small>
-</div>
-<div class="gauge">
-<strong id="rpm">0</strong>
-<small>RPM</small>
-</div>
-</div>
-
-<p>Drag the steering wheel or use the controls.</p>
-<div id="steering" aria-label="Drag steering wheel"></div>
-
-<div class="controls">
-<button id="left">⬅ LEFT</button>
-<button id="right">RIGHT ➡</button>
-<button id="brake">BRAKE</button>
-<button onclick="useNitro()">⚡ NITRO</button>
-<button onclick="toggleSound()" id="soundButton">🔊 SOUND ON</button>
-</div>
-
-<br>
-<button onclick="pauseRace()" id="pauseButton">⏸ PAUSE</button>
-<button onclick="startRace()">↻ RESTART</button>
-<button onclick="goHome()">HOME</button>
+<section id="quiz" class="page">
+  <h2>🧠 QUIZ MASTER</h2>
+  <div class="quiz-box">
+    <p>Test your knowledge!</p>
+    <p id="question">Press Start Quiz to begin.</p>
+    <div id="answers"></div>
+    <p id="quizMessage"></p>
+    <p>Question: <b id="qNumber">0</b>/20</p>
+    <p>Score: <b id="quizScore">0</b></p>
+    <button class="main-btn" id="quizStart">START QUIZ</button>
+    <button class="main-btn" id="nextQuestion" style="display:none">NEXT ➜</button>
+  </div>
 </section>
 
-<!-- QUIZ -->
-<section id="quiz" class="screen">
-<h2>🧠 QUIZ MASTER</h2>
-<div class="hud">
-<span>Question: <b id="qNumber">1</b>/9</span>
-<span>Score: <b id="qScore">0</b></span>
-</div>
-<div class="question">
-<h3 id="questionText">Question</h3>
-<div id="answers"></div>
-<p id="feedback"></p>
-<button id="nextButton" onclick="nextQuestion()" style="display:none">NEXT QUESTION ➜</button>
-</div>
-<button onclick="goHome()">HOME</button>
-</section>
+<footer>RETRO ARCADE © 2026</footer>
 
 <script>
-// ===============================
-// SCREEN NAVIGATION
-// ===============================
-function showScreen(id){
- document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
- document.getElementById(id).classList.add("active");
-}
-function goHome(){
- stopRace();
- showScreen("home");
+/* PAGE SWITCHING */
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 }
 
-// ===============================
-// RACING GAME
-// ===============================
-const canvas=document.getElementById("gameCanvas");
+/* RACING GAME */
+const canvas=document.getElementById("game");
 const ctx=canvas.getContext("2d");
 
-let playerX=260;
-let roadOffset=0;
-let enemies=[];
-let pickups=[];
+let running=false;
+let gameOver=false;
+let speed=0;
 let score=0;
 let coins=0;
 let nitro=100;
-let speed=0;
-let steering=0;
-let running=false;
-let paused=false;
-let lastTime=0;
-let spawn=0;
-let coinSpawn=0;
-let animation=0;
-let nitroOn=false;
-let braking=false;
+let roadOffset=0;
+let traffic=[];
+let coinItems=[];
+let particles=[];
 let soundOn=true;
-let audio=null;
+let keys={};
+let steering=0;
+let braking=false;
+let boosting=false;
+let frame=0;
 
-function startAudio(){
- if(!audio){
-  audio=new (window.AudioContext||window.webkitAudioContext)();
- }
- if(audio.state==="suspended")audio.resume();
-}
-function beep(freq,duration=0.12,type="sine",volume=0.05){
- if(!soundOn)return;
- startAudio();
- const osc=audio.createOscillator();
- const gain=audio.createGain();
- osc.type=type;
- osc.frequency.value=freq;
- gain.gain.setValueAtTime(volume,audio.currentTime);
- gain.gain.exponentialRampToValueAtTime(0.001,audio.currentTime+duration);
- osc.connect(gain);gain.connect(audio.destination);
- osc.start();osc.stop(audio.currentTime+duration);
-}
-function toggleSound(){
- soundOn=!soundOn;
- document.getElementById("soundButton").textContent=soundOn?"🔊 SOUND ON":"🔇 SOUND OFF";
- if(soundOn)beep(600);
-}
+const player={
+  x:260,
+  y:570,
+  width:48,
+  height:88
+};
 
-function drawRoad(){
- const w=canvas.width,h=canvas.height;
- ctx.fillStyle="#17632e";
- ctx.fillRect(0,0,w,h);
+function roadLeft(){return 75}
+function roadRight(){return 445}
 
- // Road
- ctx.fillStyle="#333944";
- ctx.fillRect(65,0,390,h);
-
- // Road edges
- ctx.fillStyle="#eeeeee";
- ctx.fillRect(65,0,8,h);
- ctx.fillRect(447,0,8,h);
-
- // Red and white side markings
- for(let y=-50;y<h;y+=70){
-  let yy=(y+roadOffset)%70;
-  ctx.fillStyle="#ff3434";
-  ctx.fillRect(53,yy,12,35);
-  ctx.fillRect(455,yy,12,35);
-  ctx.fillStyle="white";
-  ctx.fillRect(53,yy+35,12,35);
-  ctx.fillRect(455,yy+35,12,35);
- }
-
- // Lane markings
- ctx.strokeStyle="#fff";
- ctx.lineWidth=5;
- ctx.setLineDash([40,35]);
- ctx.lineDashOffset=-roadOffset;
- ctx.beginPath();
- ctx.moveTo(195,0);ctx.lineTo(195,h);
- ctx.moveTo(325,0);ctx.lineTo(325,h);
- ctx.stroke();
- ctx.setLineDash([]);
-
- // Road glow
- ctx.fillStyle="rgba(0,220,255,0.07)";
- ctx.fillRect(73,0,374,h);
+function resetGame(){
+  running=true;
+  gameOver=false;
+  speed=0;
+  score=0;
+  coins=0;
+  nitro=100;
+  roadOffset=0;
+  traffic=[];
+  coinItems=[];
+  particles=[];
+  player.x=260;
+  frame=0;
+  document.getElementById("message").textContent="Race started! Avoid the traffic!";
+  document.getElementById("start").textContent="↻ RESTART";
 }
 
-function drawCar(x,y,color,player=false){
- ctx.save();
- ctx.translate(x,y);
-
- // Shadow
- ctx.fillStyle="rgba(0,0,0,.5)";
- ctx.fillRect(-25,8,58,78);
-
- // Wheels
- ctx.fillStyle="#080808";
- ctx.fillRect(-29,15,9,23);
- ctx.fillRect(22,15,9,23);
- ctx.fillRect(-29,55,9,23);
- ctx.fillRect(22,55,9,23);
-
- // Body
- let gradient=ctx.createLinearGradient(-25,0,25,0);
- gradient.addColorStop(0,"#555");
- gradient.addColorStop(.35,color);
- gradient.addColorStop(1,"#222");
- ctx.fillStyle=gradient;
- ctx.beginPath();
- ctx.moveTo(-22,70);ctx.lineTo(-25,20);
- ctx.lineTo(-16,0);ctx.lineTo(16,0);
- ctx.lineTo(25,20);ctx.lineTo(22,70);
- ctx.closePath();ctx.fill();
-
- // Windows
- ctx.fillStyle="#9cecff";
- ctx.beginPath();
- ctx.moveTo(-15,24);ctx.lineTo(-11,8);
- ctx.lineTo(11,8);ctx.lineTo(15,24);
- ctx.closePath();ctx.fill();
-
- ctx.fillStyle="#162c45";
- ctx.fillRect(-15,29,30,17);
-
- // Lights
- ctx.fillStyle=player?"#00f5ff":"#ff3333";
- ctx.fillRect(-19,65,9,5);
- ctx.fillRect(10,65,9,5);
- ctx.restore();
+function roundedRect(x,y,w,h,r,color){
+  ctx.fillStyle=color;
+  ctx.beginPath();
+  ctx.roundRect(x,y,w,h,r);
+  ctx.fill();
 }
 
-function drawCoin(x,y){
- ctx.beginPath();
- ctx.arc(x,y,11,0,Math.PI*2);
- ctx.fillStyle="#ffd700";ctx.fill();
- ctx.strokeStyle="#fff2a0";ctx.lineWidth=3;ctx.stroke();
- ctx.fillStyle="#9b6800";ctx.font="bold 14px Arial";
- ctx.textAlign="center";ctx.fillText("$",x,y+5);
+function drawBackground(){
+  ctx.fillStyle="#176b36";
+  ctx.fillRect(0,0,520,700);
+
+  // Grass details
+  for(let i=0;i<35;i++){
+    let x=(i*83)%520;
+    let y=(i*137+roadOffset*0.5)%700;
+    ctx.fillStyle=i%2?"#1d783e":"#125b30";
+    ctx.fillRect(x,y,15,8);
+  }
+
+  // Road
+  ctx.fillStyle="#343943";
+  ctx.fillRect(75,0,370,700);
+
+  // Road edges
+  ctx.fillStyle="#f5f5f5";
+  ctx.fillRect(75,0,8,700);
+  ctx.fillRect(437,0,8,700);
+
+  // Red and white roadside blocks
+  for(let y=-40;y<740;y+=65){
+    let yy=(y+roadOffset)%740;
+    ctx.fillStyle="#fff";
+    ctx.fillRect(55,yy,20,32);
+    ctx.fillRect(445,yy,20,32);
+    ctx.fillStyle="#ff3030";
+    ctx.fillRect(55,yy,20,15);
+    ctx.fillRect(445,yy,20,15);
+  }
+
+  // Lane markings
+  ctx.fillStyle="#f7f1c4";
+  for(let y=-100;y<800;y+=150){
+    let yy=(y+roadOffset)%800;
+    ctx.fillRect(194,yy,7,75);
+    ctx.fillRect(319,yy,7,75);
+  }
 }
 
-function drawNitroEffect(){
- if(!nitroOn)return;
- for(let i=0;i<12;i++){
-  ctx.fillStyle=i%2?"#00eaff":"#ffb000";
-  ctx.fillRect(playerX-12+Math.random()*25,570+Math.random()*65,4,15+Math.random()*25);
- }
+function drawCar(x,y,color,isPlayer=false){
+  // Shadow
+  ctx.fillStyle="rgba(0,0,0,.4)";
+  ctx.beginPath();
+  ctx.ellipse(x+24,y+78,29,10,0,0,Math.PI*2);
+  ctx.fill();
+
+  // Wheels
+  roundedRect(x-5,y+15,10,23,4,"#080808");
+  roundedRect(x+43,y+15,10,23,4,"#080808");
+  roundedRect(x-5,y+57,10,23,4,"#080808");
+  roundedRect(x+43,y+57,10,23,4,"#080808");
+
+  // Main body
+  roundedRect(x,y,48,88,12,color);
+
+  // Hood
+  roundedRect(x+5,y+7,38,20,7,isPlayer?"#ffaaaa":"#ffffff33");
+
+  // Windows
+  roundedRect(x+7,y+28,34,25,6,"#9deaff");
+  ctx.fillStyle="#23475c";
+  ctx.fillRect(x+23,y+29,3,23);
+
+  // Rear window
+  roundedRect(x+8,y+58,32,13,4,"#24495e");
+
+  // Lights
+  roundedRect(x+4,y+75,10,6,2,"#ff2424");
+  roundedRect(x+34,y+75,10,6,2,"#ff2424");
+
+  if(isPlayer){
+    ctx.fillStyle="#fff";
+    ctx.fillRect(x+18,y+3,12,4);
+  }
+}
+
+function drawCoin(c){
+  ctx.beginPath();
+  ctx.fillStyle="#ffd500";
+  ctx.arc(c.x,c.y,12,0,Math.PI*2);
+  ctx.fill();
+  ctx.strokeStyle="#fff4a1";
+  ctx.lineWidth=3;
+  ctx.stroke();
+  ctx.fillStyle="#9b5d00";
+  ctx.font="bold 15px Arial";
+  ctx.textAlign="center";
+  ctx.fillText("$",c.x,c.y+5);
+}
+
+function drawParticles(){
+  particles.forEach(p=>{
+    ctx.fillStyle=p.color;
+    ctx.globalAlpha=p.life/25;
+    ctx.fillRect(p.x,p.y,5,5);
+    ctx.globalAlpha=1;
+    p.x+=p.vx;
+    p.y+=p.vy;
+    p.life--;
+  });
+  particles=particles.filter(p=>p.life>0);
+}
+
+function spawnTraffic(){
+  const lanes=[125,250,375];
+  const colors=["#ff3333","#258cff","#f2a900","#b54cff","#eeeeee"];
+  let lane=lanes[Math.floor(Math.random()*lanes.length)];
+  traffic.push({
+    x:lane,
+    y:-110,
+    color:colors[Math.floor(Math.random()*colors.length)],
+    speed:Math.random()*2+1
+  });
+}
+
+function spawnCoin(){
+  const lanes=[150,250,370];
+  coinItems.push({
+    x:lanes[Math.floor(Math.random()*lanes.length)],
+    y:-30
+  });
+}
+
+function collision(a,b){
+  return a.x < b.x+48 &&
+         a.x+48 > b.x &&
+         a.y < b.y+88 &&
+         a.y+88 > b.y;
+}
+
+function playBeep(frequency=500){
+  if(!soundOn)return;
+  try{
+    const audio=new (window.AudioContext||window.webkitAudioContext)();
+    const oscillator=audio.createOscillator();
+    const gain=audio.createGain();
+    oscillator.frequency.value=frequency;
+    oscillator.connect(gain);
+    gain.connect(audio.destination);
+    gain.gain.setValueAtTime(.07,audio.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.15);
+    oscillator.start();
+    oscillator.stop(audio.currentTime+.15);
+  }catch(e){}
+}
+
+function updateGame(){
+  if(!running)return;
+
+  frame++;
+
+  if(boosting && nitro>0 && !braking){
+    speed=Math.min(180,speed+1.5);
+    nitro=Math.max(0,nitro-0.7);
+  }else if(braking){
+    speed=Math.max(0,speed-2.5);
+  }else{
+    speed=Math.min(120,speed+0.35);
+    nitro=Math.min(100,nitro+0.08);
+  }
+
+  let movement=4+(speed/30);
+  if(boosting && nitro>0)movement+=4;
+
+  roadOffset=(roadOffset+movement)%800;
+  score+=Math.floor(speed/30);
+
+  if(keys.ArrowLeft || keys.a)player.x-=5;
+  if(keys.ArrowRight || keys.d)player.x+=5;
+
+  player.x=Math.max(90,Math.min(382,player.x));
+
+  if(frame%65===0)spawnTraffic();
+  if(frame%90===0)spawnCoin();
+
+  traffic.forEach(car=>{
+    car.y+=movement+car.speed;
+    if(collision(player,{x:car.x,y:car.y})){
+      endGame();
+    }
+  });
+  traffic=traffic.filter(car=>car.y<760);
+
+  coinItems.forEach(c=>{
+    c.y+=movement;
+    let dx=(player.x+24)-c.x;
+    let dy=(player.y+44)-c.y;
+    if(Math.sqrt(dx*dx+dy*dy)<38 && !c.collected){
+      c.collected=true;
+      coins++;
+      score+=100;
+      playBeep(850);
+      for(let i=0;i<10;i++){
+        particles.push({
+          x:c.x,y:c.y,
+          vx:Math.random()*6-3,
+          vy:Math.random()*-6,
+          life:25,
+          color:"#ffd500"
+        });
+      }
+    }
+  });
+  coinItems=coinItems.filter(c=>c.y<750&&!c.collected);
+
+  document.getElementById("speed").textContent=Math.round(speed);
+  document.getElementById("rpm").textContent=Math.round(speed*45);
+  document.getElementById("coins").textContent=coins;
+  document.getElementById("score").textContent=score;
+  document.getElementById("nitroLevel").textContent=Math.round(nitro);
+}
+
+function endGame(){
+  running=false;
+  gameOver=true;
+  playBeep(180);
+  document.getElementById("message").textContent=
+    "GAME OVER! Score: "+score+" | Coins: "+coins;
+  document.getElementById("start").textContent="↻ PLAY AGAIN";
 }
 
 function drawGame(){
- drawRoad();
- enemies.forEach(e=>drawCar(e.x,e.y,e.color));
- pickups.forEach(c=>drawCoin(c.x,c.y));
- drawNitroEffect();
- drawCar(playerX,570,"#00dfff",true);
+  ctx.clearRect(0,0,520,700);
+  drawBackground();
 
- if(!running){
-  ctx.fillStyle="rgba(0,0,0,.6)";
-  ctx.fillRect(65,260,390,120);
-  ctx.fillStyle="white";ctx.font="bold 28px Arial";
-  ctx.textAlign="center";ctx.fillText(paused?"PAUSED":"PRESS PLAY",260,325);
- }
-}
+  traffic.forEach(car=>drawCar(car.x,car.y,car.color));
+  coinItems.forEach(c=>drawCoin(c));
+  drawCar(player.x,player.y,"#ed174c",true);
+  drawParticles();
 
-function updateHud(){
- document.getElementById("score").textContent=score;
- document.getElementById("coins").textContent=coins;
- document.getElementById("nitro").textContent=Math.round(nitro);
- document.getElementById("speed").textContent=Math.round(speed);
- document.getElementById("rpm").textContent=Math.round(speed*35);
-}
-
-function endRace(){
- running=false;
- nitroOn=false;
- beep(130,.35,"sawtooth");
- alert("CRASH! Your score: "+score+" | Coins: "+coins);
-}
-
-function updateRace(dt){
- if(!running||paused)return;
-
- const target=braking?65:(nitroOn&&nitro>0?285:190);
- speed+=(target-speed)*Math.min(1,dt*2);
- roadOffset+=speed*dt*0.55;
- score+=Math.floor(speed*dt/10);
-
- playerX+=steering*260*dt;
- playerX=Math.max(105,Math.min(415,playerX));
-
- spawn+=dt;
- coinSpawn+=dt;
-
- if(spawn>Math.max(.45,1.25-speed/500)){
-  spawn=0;
-  let lanes=[130,260,390];
-  let x=lanes[Math.floor(Math.random()*3)];
-  enemies.push({x,y:-100,color:["#ff3030","#ffcc00","#b45cff","#ffffff"][Math.floor(Math.random()*4)]});
- }
- if(coinSpawn>1.2){
-  coinSpawn=0;
-  pickups.push({x:[130,260,390][Math.floor(Math.random()*3)],y:-20});
- }
-
- enemies.forEach(e=>e.y+=speed*dt*0.65);
- pickups.forEach(c=>c.y+=speed*dt*0.65);
-
- enemies=enemies.filter(e=>e.y<760);
- pickups=pickups.filter(c=>c.y<760);
-
- for(const e of enemies){
-  if(Math.abs(e.x-playerX)<43&&Math.abs(e.y-570)<65){
-   endRace();return;
+  if(boosting && running && nitro>0){
+    ctx.fillStyle="#00d9ff";
+    ctx.fillRect(player.x+10,player.y+88,8,22);
+    ctx.fillRect(player.x+30,player.y+88,8,22);
   }
- }
- pickups=pickups.filter(c=>{
-  if(Math.abs(c.x-playerX)<35&&Math.abs(c.y-570)<45){
-   coins++;score+=100;beep(900,.1);return false;
+
+  if(!running){
+    ctx.fillStyle="rgba(0,0,0,.6)";
+    ctx.fillRect(0,0,520,700);
+    ctx.textAlign="center";
+    ctx.fillStyle="#00eaff";
+    ctx.font="bold 34px Arial";
+    ctx.fillText(gameOver?"GAME OVER":"RETRO RACING",260,310);
+    ctx.fillStyle="white";
+    ctx.font="18px Arial";
+    ctx.fillText(gameOver?"Press PLAY AGAIN":"Press START GAME",260,350);
   }
-  return true;
- });
-
- if(nitroOn){
-  nitro=Math.max(0,nitro-25*dt);
-  if(nitro===0)nitroOn=false;
- }else{
-  nitro=Math.min(100,nitro+5*dt);
- }
- updateHud();
 }
 
-function loop(time){
- if(!running)return;
- let dt=Math.min((time-lastTime)/1000||0,0.04);
- lastTime=time;
- updateRace(dt);
- drawGame();
- if(running)animation=requestAnimationFrame(loop);
+function loop(){
+  updateGame();
+  drawGame();
+  requestAnimationFrame(loop);
 }
+loop();
 
-function startRace(){
- startAudio();
- cancelAnimationFrame(animation);
- playerX=260;roadOffset=0;
- enemies=[];pickups=[];
- score=0;coins=0;nitro=100;speed=0;
- steering=0;nitroOn=false;braking=false;
- paused=false;running=true;spawn=0;coinSpawn=0;
- lastTime=0;
- updateHud();
- drawGame();
- animation=requestAnimationFrame(loop);
+/* BUTTON CONTROLS */
+function holdButton(id,callback){
+  const el=document.getElementById(id);
+  el.addEventListener("pointerdown",e=>{
+    e.preventDefault();
+    callback(true);
+  });
+  ["pointerup","pointerleave","pointercancel"].forEach(event=>{
+    el.addEventListener(event,()=>callback(false));
+  });
 }
-function stopRace(){
- running=false;cancelAnimationFrame(animation);
-}
-function pauseRace(){
- if(!running)return;
- paused=!paused;
- document.getElementById("pauseButton").textContent=paused?"▶ RESUME":"⏸ PAUSE";
- if(paused){drawGame();}
- else{lastTime=0;animation=requestAnimationFrame(loop);}
-}
-function useNitro(){
- startAudio();
- if(nitro>5&&running&&!paused){
-  nitroOn=true;beep(500,.3,"sawtooth");
- }
-}
+holdButton("left",v=>keys.ArrowLeft=v);
+holdButton("right",v=>keys.ArrowRight=v);
+holdButton("brake",v=>braking=v);
+holdButton("boost",v=>boosting=v);
 
-// Hold controls
-function holdButton(id,value){
- const b=document.getElementById(id);
- b.addEventListener("pointerdown",e=>{
-  e.preventDefault();startAudio();steering=value;
- });
- ["pointerup","pointerleave","pointercancel"].forEach(event=>{
-  b.addEventListener(event,()=>{if(steering===value)steering=0});
- });
-}
-holdButton("left",-1);
-holdButton("right",1);
+document.getElementById("start").onclick=resetGame;
 
-const brakeButton=document.getElementById("brake");
-brakeButton.addEventListener("pointerdown",()=>{braking=true;startAudio()});
-["pointerup","pointerleave","pointercancel"].forEach(event=>{
- brakeButton.addEventListener(event,()=>braking=false);
+document.getElementById("sound").onclick=()=>{
+  soundOn=!soundOn;
+  document.getElementById("sound").textContent=
+    soundOn?"🔊 SOUND ON":"🔇 SOUND OFF";
+};
+
+window.addEventListener("keydown",e=>{
+  keys[e.key]=true;
+  if(["ArrowLeft","ArrowRight","ArrowDown"," "].includes(e.key)){
+    e.preventDefault();
+  }
+  if(e.key==="ArrowDown")braking=true;
+  if(e.code==="Space")boosting=true;
+});
+window.addEventListener("keyup",e=>{
+  keys[e.key]=false;
+  if(e.key==="ArrowDown")braking=false;
+  if(e.code==="Space")boosting=false;
 });
 
-// Steering wheel drag
-const wheel=document.getElementById("steering");
-let wheelStart=null;
-wheel.addEventListener("pointerdown",e=>{
- wheel.setPointerCapture(e.pointerId);
- wheelStart=e.clientX;
-});
-wheel.addEventListener("pointermove",e=>{
- if(wheelStart!==null){
-  steering=Math.max(-1,Math.min(1,(e.clientX-wheelStart)/35));
-  wheel.style.transform="rotate("+steering*45+"deg)";
- }
-});
-function releaseWheel(){
- wheelStart=null;steering=0;wheel.style.transform="rotate(0deg)";
-}
-wheel.addEventListener("pointerup",releaseWheel);
-wheel.addEventListener("pointercancel",releaseWheel);
-
-// Keyboard controls
-document.addEventListener("keydown",e=>{
- if(e.key==="ArrowLeft"||e.key.toLowerCase()==="a")steering=-1;
- if(e.key==="ArrowRight"||e.key.toLowerCase()==="d")steering=1;
- if(e.key==="ArrowDown"||e.key.toLowerCase()==="s")braking=true;
- if(e.code==="Space"){e.preventDefault();useNitro()}
-});
-document.addEventListener("keyup",e=>{
- if(["ArrowLeft","ArrowRight","a","d","A","D"].includes(e.key))steering=0;
- if(["ArrowDown","s","S"].includes(e.key))braking=false;
-});
-
-drawGame();
-
-// ===============================
-// QUIZ MASTER
-// ===============================
+/* QUIZ MASTER */
 const questions=[
- {
-  q:"Which computer component executes arithmetic, logical and control instructions?",
-  a:["Monitor","CPU","Keyboard","Mouse"],c:1
- },
- {
-  q:"Which country has the most time zones, spanning 12?",
-  a:["Russia","United States","France","China"],c:2
- },
- {
-  q:"Which major European river flows through or along the borders of 10 countries?",
-  a:["Danube","Rhine","Seine","Thames"],c:0
- },
- {
-  q:"Which country has over 17,000 islands and many active volcanoes?",
-  a:["Japan","Indonesia","Philippines","New Zealand"],c:1
- },
- {
-  q:"Which desert covers most of North Africa?",
-  a:["Gobi Desert","Kalahari Desert","Sahara Desert","Arabian Desert"],c:2
- },
- {
-  q:"What is the capital city of Australia?",
-  a:["Sydney","Melbourne","Canberra","Perth"],c:2
- },
- {
-  q:"What is the main function of ABS in a vehicle?",
-  a:["Increase engine power","Prevent wheels from locking during hard braking","Change gears automatically","Cool the engine"],c:1
- },
- {
-  q:"Which component converts piston movement into rotary motion?",
-  a:["Camshaft","Crankshaft","Radiator","Clutch"],c:1
- },
- {
-  q:"Which belt-driven compressor is used for forced induction in an engine?",
-  a:["Turbocharger","Supercharger","Alternator","Radiator"],c:1
- }
+{q:"Which component is known as the brain of a computer?",a:["Monitor","CPU","Keyboard","Mouse"],c:1},
+{q:"Which is the largest planet in our solar system?",a:["Earth","Jupiter","Mars","Venus"],c:1},
+{q:"What is the capital of Australia?",a:["Sydney","Canberra","Melbourne","Perth"],c:1},
+{q:"Who invented the World Wide Web?",a:["Bill Gates","Tim Berners-Lee","Steve Jobs","Newton"],c:1},
+{q:"What is the full form of HTML?",a:["HyperText Markup Language","High Text Machine Language","Home Tool Markup Language","Hyper Transfer Main Link"],c:0},
+{q:"When did the Constitution of India come into effect?",a:["15 August 1947","26 January 1950","26 November 1949","2 October 1950"],c:1},
+{q:"What is the SI unit of power?",a:["Joule","Newton","Watt","Pascal"],c:2},
+{q:"Which desert covers most of North Africa?",a:["Gobi","Sahara","Kalahari","Arabian"],c:1},
+{q:"Which gas do plants absorb during photosynthesis?",a:["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"],c:2},
+{q:"What is the chemical symbol for gold?",a:["Ag","Au","Fe","Go"],c:1},
+{q:"Which organ pumps blood around the human body?",a:["Lungs","Brain","Heart","Kidney"],c:2},
+{q:"What is the SI unit of electrical resistance?",a:["Volt","Ampere","Ohm","Watt"],c:2},
+{q:"A light-year measures what?",a:["Time","Distance","Speed","Brightness"],c:1},
+{q:"What is the pH value of pure water at 25°C?",a:["5","6","7","8"],c:2},
+{q:"Which is the fastest land animal?",a:["Lion","Horse","Cheetah","Tiger"],c:2},
+{q:"Which component converts piston movement into rotary motion?",a:["Camshaft","Crankshaft","Radiator","Clutch"],c:1},
+{q:"What is the main function of a car radiator?",a:["Cool the engine","Increase fuel supply","Charge the battery","Control brakes"],c:0},
+{q:"What is the decimal value of binary 1010?",a:["8","10","12","14"],c:1},
+{q:"Which country has the city of Tokyo as its capital?",a:["China","Japan","Thailand","South Korea"],c:1},
+{q:"What is the average of 10, 20 and 30?",a:["10","15","20","25"],c:2}
 ];
 
 let qIndex=0;
@@ -551,61 +597,73 @@ let qScore=0;
 let answered=false;
 
 function startQuiz(){
- qIndex=0;qScore=0;
- showQuestion();
-}
-function showQuestion(){
- answered=false;
- const q=questions[qIndex];
- document.getElementById("qNumber").textContent=qIndex+1;
- document.getElementById("qScore").textContent=qScore;
- document.getElementById("questionText").textContent=q.q;
- document.getElementById("feedback").textContent="";
- document.getElementById("nextButton").style.display="none";
-
- const box=document.getElementById("answers");
- box.innerHTML="";
- q.a.forEach((answer,i)=>{
-  const b=document.createElement("button");
-  b.className="answer";
-  b.textContent=String.fromCharCode(65+i)+". "+answer;
-  b.onclick=()=>checkAnswer(i,b);
-  box.appendChild(b);
- });
-}
-function checkAnswer(choice,button){
- if(answered)return;
- answered=true;
- const q=questions[qIndex];
- const buttons=document.querySelectorAll(".answer");
- buttons.forEach(b=>b.disabled=true);
-
- if(choice===q.c){
-  qScore++;
-  document.getElementById("feedback").textContent="✅ Correct answer!";
-  button.style.background="#168c50";
-  beep(850);
- }else{
-  document.getElementById("feedback").textContent="❌ Correct answer: "+q.a[q.c];
-  button.style.background="#a52b3b";
-  buttons[q.c].style.background="#168c50";
- }
- document.getElementById("qScore").textContent=qScore;
- document.getElementById("nextButton").style.display="inline-block";
-}
-function nextQuestion(){
- qIndex++;
- if(qIndex<questions.length){
+  qIndex=0;
+  qScore=0;
+  document.getElementById("quizScore").textContent=qScore;
   showQuestion();
- }else{
-  document.getElementById("questionText").textContent="QUIZ COMPLETED!";
-  document.getElementById("answers").innerHTML="";
-  document.getElementById("feedback").textContent=
-   "Your final score: "+qScore+" / "+questions.length;
-  document.getElementById("nextButton").style.display="none";
-  document.getElementById("qNumber").textContent=questions.length;
- }
 }
+
+function showQuestion(){
+  answered=false;
+  const q=questions[qIndex];
+  document.getElementById("question").textContent=q.q;
+  document.getElementById("qNumber").textContent=qIndex+1;
+  document.getElementById("quizMessage").textContent="";
+  document.getElementById("nextQuestion").style.display="none";
+  document.getElementById("quizStart").style.display="none";
+
+  const area=document.getElementById("answers");
+  area.innerHTML="";
+
+  q.a.forEach((answer,i)=>{
+    const btn=document.createElement("button");
+    btn.className="answer";
+    btn.textContent=answer;
+    btn.onclick=()=>chooseAnswer(i,btn);
+    area.appendChild(btn);
+  });
+}
+
+function chooseAnswer(choice,button){
+  if(answered)return;
+  answered=true;
+
+  const q=questions[qIndex];
+  const all=document.querySelectorAll(".answer");
+
+  if(choice===q.c){
+    qScore++;
+    button.classList.add("correct");
+    document.getElementById("quizMessage").textContent="✅ Correct answer!";
+  }else{
+    button.classList.add("wrong");
+    all[q.c].classList.add("correct");
+    document.getElementById("quizMessage").textContent="❌ Correct answer: "+q.a[q.c];
+  }
+
+  document.getElementById("quizScore").textContent=qScore;
+  document.getElementById("nextQuestion").style.display="inline-block";
+}
+
+function nextQuizQuestion(){
+  qIndex++;
+  if(qIndex<questions.length){
+    showQuestion();
+  }else{
+    document.getElementById("question").textContent=
+      "Quiz completed! Your score is "+qScore+" out of "+questions.length+".";
+    document.getElementById("answers").innerHTML="";
+    document.getElementById("quizMessage").textContent=
+      qScore>=15?"Excellent work!":"Good try! Keep practising!";
+    document.getElementById("nextQuestion").style.display="none";
+    document.getElementById("quizStart").style.display="inline-block";
+    document.getElementById("quizStart").textContent="PLAY AGAIN";
+    document.getElementById("qNumber").textContent=questions.length;
+  }
+}
+
+document.getElementById("quizStart").onclick=startQuiz;
+document.getElementById("nextQuestion").onclick=nextQuizQuestion;
 </script>
 </body>
 </html>
