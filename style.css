@@ -1,0 +1,512 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #080817;
+  --panel: #11112a;
+  --cyan: #00f5ff;
+  --pink: #ff32bd;
+  --purple: #8b5cf6;
+  --text: #f4f4ff;
+  --muted: #aaaac7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  overflow-x: hidden;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  color: white;
+}
+
+.background-glow {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 15% 20%, #431b7633, transparent 45%),
+    radial-gradient(ellipse at 85% 70%, #003d6333, transparent 45%);
+}
+
+.topbar {
+  height: 75px;
+  padding: 0 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ffffff15;
+  background: #080817dd;
+}
+
+.logo {
+  color: white;
+  text-decoration: none;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.logo span {
+  color: var(--cyan);
+}
+
+.top-label, .eyebrow, .card-tag {
+  color: var(--cyan);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+main {
+  width: min(1100px, 92%);
+  margin: auto;
+}
+
+.screen {
+  display: none;
+  padding: 45px 0 30px;
+  animation: appear .4s ease;
+}
+
+.screen.active {
+  display: block;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero {
+  padding: 35px 0 45px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(42px, 8vw, 76px);
+  line-height: 1.15;
+  margin: 18px 0;
+  letter-spacing: -3px;
+}
+
+.hero h1 span {
+  color: var(--cyan);
+  text-shadow: 0 0 25px #00f5ff88;
+}
+
+.hero p {
+  color: var(--muted);
+  font-size: 19px;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 25px;
+  margin: 15px 0 50px;
+}
+
+.game-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 330px;
+  padding: 32px;
+  border: 1px solid #ffffff1a;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #171735, #101024);
+  transition: transform .3s, border-color .3s, box-shadow .3s;
+}
+
+.game-card:hover {
+  transform: translateY(-7px);
+  border-color: var(--cyan);
+  box-shadow: 0 15px 50px #00e5ff18;
+}
+
+.racing-card::after, .quiz-card::after {
+  content: "";
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  right: -60px;
+  bottom: -80px;
+  border-radius: 50%;
+  background: #00d9ff22;
+  filter: blur(35px);
+}
+
+.quiz-card::after {
+  background: #ff32bd30;
+}
+
+.card-icon {
+  font-size: 60px;
+  margin: 12px 0 25px;
+}
+
+.card-tag {
+  color: var(--pink);
+}
+
+.game-card h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 23px;
+  margin: 14px 0;
+}
+
+.game-card p {
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.5;
+  min-height: 55px;
+}
+
+.primary-btn {
+  position: relative;
+  z-index: 1;
+  margin-top: 16px;
+  padding: 14px 22px;
+  border: 0;
+  border-radius: 6px;
+  background: linear-gradient(100deg, #00b8ce, #635bff);
+  box-shadow: 0 0 20px #00ddff33;
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  transition: .2s;
+}
+
+.primary-btn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 28px #00ddff77;
+}
+
+.primary-btn span {
+  margin-left: 10px;
+}
+
+footer {
+  text-align: center;
+  color: #666681;
+  font-size: 12px;
+  letter-spacing: 2px;
+  padding: 20px;
+}
+
+.game-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.game-heading h2 {
+  font-family: 'Orbitron', sans-serif;
+  margin: 6px 0;
+  font-size: 25px;
+}
+
+.back-btn, .secondary-btn {
+  padding: 10px 16px;
+  border: 1px solid #ffffff25;
+  border-radius: 6px;
+  background: #17172d;
+}
+
+.back-btn:hover, .secondary-btn:hover {
+  border-color: var(--cyan);
+}
+
+.game-status {
+  color: var(--cyan);
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.race-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 480px) 220px;
+  justify-content: center;
+  gap: 20px;
+  align-items: start;
+}
+
+.canvas-wrap {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #00eaff77;
+  border-radius: 12px;
+  background: #05050b;
+  box-shadow: 0 0 30px #00d9ff22;
+  line-height: 0;
+}
+
+#gameCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #050510bb;
+  line-height: normal;
+  text-align: center;
+}
+
+.game-overlay.hidden {
+  display: none;
+}
+
+.overlay-box {
+  padding: 25px;
+}
+
+.overlay-box h2 {
+  font-family: 'Orbitron', sans-serif;
+  color: var(--cyan);
+}
+
+.overlay-box p {
+  color: var(--muted);
+}
+
+.big-icon {
+  font-size: 55px;
+}
+
+.race-sidebar {
+  display: grid;
+  gap: 13px;
+}
+
+.stat-box, .nitro-box {
+  padding: 16px;
+  background: var(--panel);
+  border: 1px solid #ffffff16;
+  border-radius: 9px;
+}
+
+.stat-box small, .nitro-box small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.stat-box strong {
+  display: block;
+  margin-top: 7px;
+  color: var(--cyan);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 21px;
+}
+
+.stat-box strong small {
+  display: inline;
+  font-size: 9px;
+}
+
+.nitro-track, .progress-track {
+  height: 9px;
+  overflow: hidden;
+  margin: 12px 0;
+  border-radius: 20px;
+  background: #33334c;
+}
+
+#nitroFill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #00f5ff, #ff32bd);
+  transition: width .15s;
+}
+
+.nitro-btn {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--cyan);
+  border-radius: 6px;
+  background: #00b9d533;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 800;
+}
+
+.secondary-btn {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.mobile-controls {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  margin: 20px 0;
+}
+
+.mobile-controls button {
+  width: 75px;
+  height: 55px;
+  border: 1px solid var(--cyan);
+  border-radius: 10px;
+  background: #101a30;
+  font-size: 24px;
+  touch-action: none;
+}
+
+.controls-hint {
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.quiz-panel {
+  width: min(650px, 100%);
+  margin: 35px auto;
+  padding: 30px;
+  border: 1px solid #ffffff20;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #171735, #0e1024);
+  box-shadow: 0 20px 70px #0005;
+}
+
+.quiz-top, .quiz-bottom {
+  display: flex;
+  justify-content: space-between;
+  color: var(--cyan);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+}
+
+#quizProgress {
+  height: 100%;
+  width: 0%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, var(--cyan), var(--pink));
+  transition: width .3s;
+}
+
+#quizContent {
+  padding: 25px 0;
+  text-align: center;
+}
+
+#quizContent h2 {
+  font-family: 'Orbitron', sans-serif;
+}
+
+#quizContent p {
+  color: var(--muted);
+}
+
+.quiz-emoji {
+  font-size: 55px;
+}
+
+.answer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.answer-btn {
+  padding: 15px;
+  border: 1px solid #ffffff25;
+  border-radius: 8px;
+  background: #20203e;
+  color: white;
+  font-size: 17px;
+  text-align: left;
+  transition: .2s;
+}
+
+.answer-btn:hover:not(:disabled) {
+  border-color: var(--cyan);
+  background: #18374a;
+}
+
+.answer-btn:disabled {
+  opacity: .8;
+  cursor: default;
+}
+
+.answer-btn.correct {
+  border-color: #32e99a;
+  background: #10543d;
+}
+
+.answer-btn.wrong {
+  border-color: #ff527d;
+  background: #63243a;
+}
+
+.quiz-bottom {
+  margin-top: 25px;
+  padding-top: 18px;
+  border-top: 1px solid #ffffff20;
+}
+
+@media (max-width: 700px) {
+  .topbar {
+    padding: 0 5%;
+  }
+
+  .top-label {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  .game-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .game-card {
+    min-height: 290px;
+  }
+
+  .race-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .race-sidebar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .game-heading h2 {
+    font-size: 18px;
+  }
+
+  .game-status {
+    display: none;
+  }
+
+  .quiz-panel {
+    padding: 20px;
+  }
+
+  .answer-grid {
+    grid-template-columns: 1fr;
+  }
+}
